@@ -17,6 +17,8 @@ fun main(args: Array<String>) {
     val sourceFile = File(args[0])
     val mappings = mutableListOf(Field(gen = Pointer(0, 0)))
     val outputLines = mutableListOf(
+        "const fs = require('fs');",
+        "let read = () => { let buf = Buffer.alloc(1); try { return fs.readSync(0, buf, 0, 1) === 0 ? 0 : buf[0]; } catch(e) { return 0; } };",
         "let print = (it) => { process.stdout.write(String.fromCharCode(it)) };",
         "((ptr, data) => {"
     )
@@ -32,7 +34,7 @@ fun main(args: Array<String>) {
 
     val outputFile = File("target/${sourceFile.name.removeSuffix(".bf") + ".js"}")
     val sourceMapJson = mappings.createSourceMapModel(outputFile, sourceFile).toJson()
-    outputLines += "})(0, Array.from(Array(1024)).map(()=>0));" +
+    outputLines += "})(0, Array.from(Array(30000)).map(()=>0));" +
             "//# sourceMappingURL=data:application/json;base64,${sourceMapJson.base64()}"
 
     PrintStream(outputFile).run { outputLines.forEach(::println) }
