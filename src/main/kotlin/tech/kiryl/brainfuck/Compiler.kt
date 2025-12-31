@@ -9,7 +9,7 @@ import tech.kiryl.sourcemap.SourceMap
 import tech.kiryl.vlq.encode
 import java.io.File
 import java.io.PrintStream
-import java.util.*
+import java.util.Base64
 
 const val GEN_INDENT = 2
 

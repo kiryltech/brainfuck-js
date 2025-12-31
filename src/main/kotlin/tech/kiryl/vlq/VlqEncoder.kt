@@ -3,12 +3,7 @@ package tech.kiryl.vlq
 private const val VLQ_BASE_SHIFT = 5
 private const val VLQ_BASE = 1 shl VLQ_BASE_SHIFT
 
-private val BASE64_DIGITS = (
-        ('A'..'Z').toList() +
-                ('a'..'z').toList() +
-                ('0'..'9').toList() +
-                listOf('+', '/')
-        ).toCharArray()
+private val BASE64_DIGITS = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/".toCharArray()
 
 fun encode(vararg input: List<Int>): String {
     return input.joinToString(",") {

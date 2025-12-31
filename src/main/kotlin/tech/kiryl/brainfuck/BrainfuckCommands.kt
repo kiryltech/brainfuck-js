@@ -15,6 +15,6 @@ enum class BrainfuckCommands(
     ;
 
     companion object {
-        val byCmd = values().associate { it.cmd to it }
+        val byCmd = entries.associateBy { it.cmd }
     }
 }
