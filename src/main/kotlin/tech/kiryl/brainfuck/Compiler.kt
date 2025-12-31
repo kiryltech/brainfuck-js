@@ -62,12 +62,6 @@ private fun MutableList<Field>.populateSourceMap(
     origLine: Int,
     origPos: Int
 ) {
-    if (this.last().orig.startingLine != origLine) {
-        this += Field(
-            gen = Pointer(genLine, 0),
-            orig = Pointer(origLine, 0)
-        )
-    }
     this += Field(
         gen = Pointer(genLine, genPos),
         orig = Pointer(origLine, origPos)
