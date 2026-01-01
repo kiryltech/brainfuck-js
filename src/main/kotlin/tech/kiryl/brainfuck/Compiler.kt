@@ -26,8 +26,8 @@ fun main(args: Array<String>) {
     sourceFile.readLines().forEachIndexed { lineNum, lineText ->
         lineText.toCharArray().forEachIndexed { posNum, cmd ->
             BrainfuckCommands.byCmd[cmd]?.run {
-                mappings.populateSourceMap(this, outputLines.size, GEN_INDENT, lineNum, posNum)
-                outputLines += " " * GEN_INDENT + jsCmd
+                mappings.populateSourceMap(outputLines.size, GEN_INDENT, lineNum, posNum, jsCmd.length)
+                outputLines += " " * GEN_INDENT + jsCmd + " // $lineNum:$posNum"
             }
         }
     }
@@ -56,19 +56,19 @@ private fun MutableList<Field>.createSourceMapModel(outputFile: File, sourceFile
     )
 
 private fun MutableList<Field>.populateSourceMap(
-    cmd: BrainfuckCommands,
     genLine: Int,
     genPos: Int,
     origLine: Int,
-    origPos: Int
+    origPos: Int,
+    jsCmdLength: Int
 ) {
     this += Field(
         gen = Pointer(genLine, genPos),
         orig = Pointer(origLine, origPos)
     )
     this += Field(
-        gen = Pointer(genLine, genPos + cmd.jsCmd.length),
-        orig = Pointer(origLine, origPos + 1)
+        gen = Pointer(genLine, genPos + jsCmdLength),
+        orig = Pointer(origLine, origPos)
     )
 }
 
